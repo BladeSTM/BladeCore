@@ -465,6 +465,9 @@ public: /* PlayerScript */
     bool OnPlayerCanResurrect(Player* player);
     bool OnPlayerCanGiveLevel(Player* player, uint8 newLevel);
     void OnPlayerSendListInventory(Player* player, ObjectGuid vendorGuid, uint32& vendorEntry);
+    void OnPlayerAfterMoveItemToInventory(Player* player, Item* it, bool update);
+    void OnPlayerRemoveItem(Player* player, Item* pItem, uint8 bag, uint8 slot, bool update, bool swap);
+    void OnPlayerUnequipItem(Player* player, Item* pItem, uint8 bag, uint8 slot, bool update, bool swap);
 
     // Anti cheat
     void AnticheatSetCanFlybyServer(Player* player, bool apply);

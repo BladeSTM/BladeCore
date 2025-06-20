@@ -925,6 +925,21 @@ void ScriptMgr::OnPlayerSendListInventory(Player* player, ObjectGuid vendorGuid,
     CALL_ENABLED_HOOKS(PlayerScript, PLAYERHOOK_ON_SEND_LIST_INVENTORY, script->OnPlayerSendListInventory(player, vendorGuid, vendorEntry));
 }
 
+void ScriptMgr::OnPlayerAfterMoveItemToInventory(Player* player, Item* it, bool update)
+{
+    CALL_ENABLED_HOOKS(PlayerScript, PLAYERHOOK_ON_AFTER_MOVE_ITEM_TO_INVENTORY, script->OnPlayerAfterMoveItemToInventory(player, it, update));
+}
+
+void ScriptMgr::OnPlayerRemoveItem(Player* player, Item* pItem, uint8 bag, uint8 slot, bool update, bool swap)
+{
+    CALL_ENABLED_HOOKS(PlayerScript, PLAYERHOOK_ON_REMOVE_ITEM, script->OnPlayerRemoveItem(player, pItem, bag, slot, update, swap));
+}
+
+void ScriptMgr::OnPlayerUnequipItem(Player* player, Item* pItem, uint8 bag, uint8 slot, bool update, bool swap)
+{
+    CALL_ENABLED_HOOKS(PlayerScript, PLAYERHOOK_ON_UNEQUIP, script->OnPlayerUnequipItem(player, pItem, bag, slot, update, swap));
+}
+
 PlayerScript::PlayerScript(const char* name, std::vector<uint16> enabledHooks)
     : ScriptObject(name, PLAYERHOOK_END)
 {

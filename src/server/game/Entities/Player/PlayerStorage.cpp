@@ -2922,6 +2922,7 @@ void Player::RemoveItem(uint8 bag, uint8 slot, bool update, bool swap)
                 if (pProto && pProto->ItemSet)
                     RemoveItemsSetItem(this, pProto);
 
+                sScriptMgr->OnPlayerUnequipItem(this, pItem, bag, slot, update, swap);
                 _ApplyItemMods(pItem, slot, false);
             }
 
@@ -2971,6 +2972,8 @@ void Player::RemoveItem(uint8 bag, uint8 slot, bool update, bool swap)
         pItem->SetSlot(NULL_SLOT);
         if (IsInWorld() && update)
             pItem->SendUpdateToPlayer(this);
+
+        sScriptMgr->OnPlayerRemoveItem(this, pItem, bag, slot, update, swap);
     }
 }
 
@@ -2994,7 +2997,7 @@ void Player::MoveItemFromInventory(uint8 bag, uint8 slot, bool update)
     }
 }
 
-// Common operation need to add item from inventory without delete in trade, guild bank, mail....
+// Common operation need to add item to inventory without delete in trade, guild bank, mail....
 void Player::MoveItemToInventory(ItemPosCountVec const& dest, Item* pItem, bool update, bool in_characterInventoryDB)
 {
     // update quest counters
@@ -3018,6 +3021,8 @@ void Player::MoveItemToInventory(ItemPosCountVec const& dest, Item* pItem, bool 
         if (pLastItem->IsBOPTradable())
             AddTradeableItem(pLastItem);
     }
+
+    sScriptMgr->OnPlayerAfterMoveItemToInventory(this, pLastItem, update);
 }
 
 void Player::DestroyItem(uint8 bag, uint8 slot, bool update)

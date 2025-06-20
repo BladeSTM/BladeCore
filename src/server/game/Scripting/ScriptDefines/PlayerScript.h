@@ -210,6 +210,9 @@ enum PlayerHook
     PLAYERHOOK_CAN_RESURRECT,
     PLAYERHOOK_ON_CAN_GIVE_LEVEL,
     PLAYERHOOK_ON_SEND_LIST_INVENTORY,
+    PLAYERHOOK_ON_AFTER_MOVE_ITEM_TO_INVENTORY,
+    PLAYERHOOK_ON_REMOVE_ITEM,
+    PLAYERHOOK_ON_UNEQUIP,
     PLAYERHOOK_END
 };
 
@@ -803,6 +806,40 @@ public:
      * @param vendorEntry Entry of the vendor player is interacting with
      */
     virtual void OnPlayerSendListInventory(Player* /*player*/, ObjectGuid /*vendorGuid*/, uint32& /*vendorEntry*/) {}
+
+    /**
+     * @brief This hook is called whenever a player moves an item to their inventory
+     * 
+     * @param player Contains information about the Player
+     * @param it Contains information about the Item being moved
+     * @param update Whether the item should be updated in the database
+     */
+    virtual void OnPlayerAfterMoveItemToInventory(Player* /*player*/, Item* /*it*/, bool /*update*/) { }
+
+    /**
+     * @brief This hook is called whenever a player removes an item from their inventory
+     * 
+     * @param player Contains information about the Player
+     * @param item Contains information about the Item being removed
+     * @param bag The bag index from which the item is being removed
+     * @param slot The slot index from which the item is being removed
+     * @param update Whether the item should be updated in the database
+     * @param swap Whether the item is being swapped with another item
+     */
+    virtual void OnPlayerRemoveItem(Player* /*player*/, Item* /*item*/, uint8 /*bag*/, uint8 /*slot*/, bool /*update*/, bool /*swap*/) { }
+
+    /**
+     * @brief This hook is called whenever a player equips an item
+     * 
+     * @param player Contains information about the Player
+     * @param item Contains information about the Item being equipped
+     * @param bag The bag index where the item is being equipped
+     * @param slot The slot index where the item is being equipped
+     * @param update Whether the item should be updated in the database
+     * @param swap Whether the item is being swapped with another item
+     */
+    virtual void OnPlayerUnequipItem(Player* /*player*/, Item* /*item*/, uint8 /*bag*/, uint8 /*slot*/, bool /*update*/, bool /*swap*/) { }
+
 };
 
 #endif
