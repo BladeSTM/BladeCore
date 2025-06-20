@@ -361,7 +361,10 @@ public:
                 a4 = fields[2].Get<uint32>();
                 a5 = fields[3].Get<uint32>();
                 a6 = fields[4].Get<uint32>();
-                a7 = fields[5].Get<std::string>().c_str();
+
+                std::string datatext = fields[5].Get<std::string>();
+                a7 = datatext.c_str();
+
                 a8 = fields[6].Get<float>();
                 a9 = fields[7].Get<float>();
                 a10 = fields[8].Get<float>();
