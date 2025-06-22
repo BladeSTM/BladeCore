@@ -616,6 +616,36 @@ void CharacterDatabaseConnection::DoPrepareStatements()
         "ON DUPLICATE KEY UPDATE state = VALUES(state)", CONNECTION_ASYNC);
     PrepareStatement(CHAR_DELETE_INSTANCE_SAVED_DATA, "DELETE FROM instance_saved_go_state_data WHERE id = ?", CONNECTION_ASYNC);
     PrepareStatement(CHAR_SANITIZE_INSTANCE_SAVED_DATA, "DELETE FROM instance_saved_go_state_data WHERE id NOT IN (SELECT instance.id FROM instance)", CONNECTION_ASYNC);
+
+    // Pseudo Item data
+    PrepareStatement(CHAR_SEL_ALL_PSEUDO_ITEM_DATA, "SELECT `guid`, `name`, `level`, "
+        "`stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`, "
+        "`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`, `stat_type6`, `stat_value6`, "
+        "`stat_type7`, `stat_value7`, `stat_type8`, `stat_value8`, `stat_type9`, `stat_value9`, "
+        "`stat_type10`, `stat_value10` "
+        "FROM `character_pseudo_item`", CONNECTION_ASYNC);
+    PrepareStatement(CHAR_SEL_PSEUDO_ITEM_DATA, "SELECT * FROM `character_pseudo_item` WHERE `guid` = ?", CONNECTION_SYNCH);
+    PrepareStatement(CHAR_INS_PSEUDO_ITEM_DATA, "INSERT INTO `character_pseudo_item` ("
+        "`guid`, `name`, `level`, "
+        "`stat_type1`, `stat_value1`, `stat_type2`, `stat_value2`, `stat_type3`, `stat_value3`, "
+        "`stat_type4`, `stat_value4`, `stat_type5`, `stat_value5`, `stat_type6`, `stat_value6`, "
+        "`stat_type7`, `stat_value7`, `stat_type8`, `stat_value8`, `stat_type9`, `stat_value9`, "
+        "`stat_type10`, `stat_value10`) "
+        "VALUES "
+        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+        "ON DUPLICATE KEY UPDATE "
+        "`name` = VALUES(`name`), `level` = VALUES(`level`), "
+        "`stat_type1` = VALUES(`stat_type1`), `stat_value1` = VALUES(`stat_value1`), "
+        "`stat_type2` = VALUES(`stat_type2`), `stat_value2` = VALUES(`stat_value2`), "
+        "`stat_type3` = VALUES(`stat_type3`), `stat_value3` = VALUES(`stat_value3`), "
+        "`stat_type4` = VALUES(`stat_type4`), `stat_value4` = VALUES(`stat_value4`), "
+        "`stat_type5` = VALUES(`stat_type5`), `stat_value5` = VALUES(`stat_value5`), "
+        "`stat_type6` = VALUES(`stat_type6`), `stat_value6` = VALUES(`stat_value6`), "
+        "`stat_type7` = VALUES(`stat_type7`), `stat_value7` = VALUES(`stat_value7`), "
+        "`stat_type8` = VALUES(`stat_type8`), `stat_value8` = VALUES(`stat_value8`), "
+        "`stat_type9` = VALUES(`stat_type9`), `stat_value9` = VALUES(`stat_value9`), "
+        "`stat_type10` = VALUES(`stat_type10`), `stat_value10` = VALUES(`stat_value10`)", CONNECTION_ASYNC);
+    PrepareStatement(CHAR_DEL_PSEUDO_ITEM_DATA, "DELETE FROM `character_pseudo_item` WHERE `guid` = ?", CONNECTION_ASYNC);
 }
 
 CharacterDatabaseConnection::CharacterDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo)
